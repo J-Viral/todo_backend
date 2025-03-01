@@ -27,7 +27,7 @@ router.get('/get-task', async (req, res) => {
     try {
         const { data, error } = await supabase.from('tasks').select('*');
         if (error) return res.status(400).json({ error: error.message });
-        res.json(data);
+        res.json({"data": data});
     } catch (error) {
         console.log("Error : ", error);
         res.json({ error: error.message })
