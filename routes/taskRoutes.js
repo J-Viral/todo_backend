@@ -8,11 +8,11 @@ const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY
 // Create Task
 router.post('/create-task', async (req, res) => {
     try {
-        const { title, description } = req.body;
-        if (!title || !description) {
+        const { title } = req.body;
+        if (!title) {
             console.log("Missing details");
         } else {
-            const { data, error } = await supabase.from('tasks').insert([{ title, description }]);
+            const { data, error } = await supabase.from('tasks').insert([{ title }]);
             if (error) return res.status(400).json({ error: error.message });
             res.json({ message: 'Task created successfully', data:data });
         }
@@ -37,17 +37,16 @@ router.get('/get-task', async (req, res) => {
 // Update Task
 router.put('/update-task/:id', async (req, res) => {
     try {
-        const { title, description } = req.body;
+        const { title } = req.body;
         
         // Check if there is at least one field to update
-        if (!title && !description) {
+        if (!title) {
             return res.status(400).json({ error: 'No fields provided to update' });
         }
 
         // Create an update object dynamically
         const updateFields = {};
         if (title) updateFields.title = title;
-        if (description) updateFields.description = description;
 
         // Perform the update
         const { data, error } = await supabase
