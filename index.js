@@ -14,6 +14,11 @@ app.use(express.json());
 // app.use('/auth', authRoutes);
 app.use('/task', taskRoutes);
 
+app.get('/', async (req, res) => {
+    console.log("hello, I am live!")
+    res.json("Hello, I am live!")
+});
+
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
